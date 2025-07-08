@@ -1,0 +1,68 @@
+{
+  "name": "vc-safe-terminal-paste",
+  "displayName": "Safe Terminal Paste",
+  "description": "Preview & confirm paste in terminal",
+  "version": "0.0.16",
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "engines": {
+    "vscode": ">=1.77.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "safeTerminalPaste.confirmPaste",
+        "title": "Safe Terminal Paste"
+      }
+    ],
+    "keybindings": [
+      {
+        "key": "ctrl+v",
+        "command": "safeTerminalPaste.confirmPaste",
+        "when": "terminalFocus"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "Safe Terminal Paste",
+      "properties": {
+        "safeTerminalPaste.newlineSymbol": {
+          "type": "string",
+          "default": "💥",
+          "description": "Symbol to display in the input box for newline characters. Suggested values: '↵' '⏎' '↩' 💥, 🔥, '\\n'"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "npm run check-types && npm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "npm run check-types && npm run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.77.0",
+    "@typescript-eslint/eslint-plugin": "^8.31.1",
+    "@typescript-eslint/parser": "^8.31.1",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.5.2",
+    "esbuild": "^0.25.3",
+    "eslint": "^9.25.1",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.8.3"
+  }
+}

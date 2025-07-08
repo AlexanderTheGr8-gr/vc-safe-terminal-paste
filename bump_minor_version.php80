@@ -1,0 +1,5 @@
+<?php
+	$package_file_path = 'package.json';
+	$package_str = file_get_contents($package_file_path);
+	$package_str_bumped_v = preg_replace_callback('/("version":\s*"\d+.\d+.)(\d+)",/', function($m){ return $m[1].($m[2]+1).'",'; }, $package_str);
+	file_put_contents($package_file_path, $package_str_bumped_v);
